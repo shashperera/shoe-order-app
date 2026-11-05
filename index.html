@@ -92,7 +92,7 @@
             <div class="flex flex-col md:flex-row gap-3">
                 <div class="relative flex-1">
                     <input type="text" id="commandInput" 
-                        placeholder="e.g. 'Branch to Kandy Store' or 'Add new item AJ-070 Black size 42 quantity 5'" 
+                        placeholder="e.g. 'Change AJ-036 colour to Brown' or 'Branch to Kandy'" 
                         class="w-full text-lg md:text-xl font-medium p-4 pr-12 rounded-xl bg-slate-900 border-3 border-amber-400 text-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-amber-300"
                         onkeypress="if(event.key === 'Enter') processInstruction()">
                     <button onclick="clearInput()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-2 text-lg">
@@ -118,8 +118,11 @@
             <div class="mt-4 pt-3 border-t border-slate-700">
                 <p class="text-xs uppercase font-extrabold text-slate-400 mb-2 tracking-wider">Quick Suggestions (Tap to edit/try):</p>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="fillCommand('Branch to Kandy Store')" class="bg-slate-700 hover:bg-slate-600 text-amber-200 font-semibold px-3 py-1.5 rounded-lg border border-slate-500 text-sm">
-                        + "Branch to Kandy Store"
+                    <button onclick="fillCommand('Change AJ-036 colour to Brown')" class="bg-slate-700 hover:bg-slate-600 text-amber-200 font-semibold px-3 py-1.5 rounded-lg border border-slate-500 text-sm">
+                        + "Change AJ-036 colour to Brown"
+                    </button>
+                    <button onclick="fillCommand('Branch to Kandy')" class="bg-slate-700 hover:bg-slate-600 text-amber-200 font-semibold px-3 py-1.5 rounded-lg border border-slate-500 text-sm">
+                        + "Branch to Kandy"
                     </button>
                     <button onclick="fillCommand('Add new item AJ-070 Black size 42 qty 10 price 3950')" class="bg-slate-700 hover:bg-slate-600 text-amber-200 font-semibold px-3 py-1.5 rounded-lg border border-slate-500 text-sm">
                         + "Add new item AJ-070"
@@ -161,7 +164,7 @@
                     </div>
                     <div>
                         <span class="text-slate-500 uppercase text-xs block">Branch / Destination</span>
-                        <span id="lblBranch" class="text-blue-800 text-lg font-black bg-yellow-200 px-2 py-0.5 rounded border border-yellow-400">Main Store</span>
+                        <span id="lblBranch" class="text-blue-800 text-lg font-black bg-yellow-200 px-2 py-0.5 rounded border border-yellow-400">Kiribathgoda </span>
                     </div>
                     <div class="sm:col-span-2">
                         <span class="text-slate-500 uppercase text-xs block">Item</span>
@@ -352,7 +355,7 @@
                     const itemMatch = prompt.match(/(aj-\d+)/i);
                     if (itemMatch) {
                         const artNo = itemMatch[1].toUpperCase();
-                        const colorMatch = prompt.match(/(black|brown|tan|white)/i);
+                        const colorMatch = prompt.match(/(black|brown|tan|white|red|blue|dark brown)/i);
                         const color = colorMatch ? colorMatch[1].charAt(0).toUpperCase() + colorMatch[1].slice(1) : "Black";
                         
                         const sizeMatch = prompt.match(/size\s*(\d{2})/i);
@@ -380,7 +383,14 @@
                         const artNo = itemMatch[1].toUpperCase();
                         let item = currentData.items.find(i => i.artNo.toLowerCase() === artNo.toLowerCase());
 
-                        if (item && (lower.includes("price") || lower.includes("rate"))) {
+                        if (item && (lower.includes("color") || lower.includes("colour"))) {
+                            const colorMatch = prompt.match(/(?:color|colour)\s*(?:to|=)?\s*([a-zA-Z\s]+)/i);
+                            if (colorMatch) {
+                                const newColor = colorMatch[1].trim();
+                                item.color = newColor.charAt(0).toUpperCase() + newColor.slice(1);
+                                modified = true;
+                            }
+                        } else if (item && (lower.includes("price") || lower.includes("rate"))) {
                             const priceMatch = prompt.match(/(?:price|to|=|set)\s*([\d,]+)/i);
                             if (priceMatch) {
                                 const newPrice = parseInt(priceMatch[1].replace(/,/g, ''), 10);
@@ -419,7 +429,7 @@
                     showStatus(`Successfully updated: "${prompt}"`, "success");
                     inputField.value = '';
                 } else {
-                    showStatus(`Could not parse instruction. Try: "Branch to Kandy Store"`, "error");
+                    showStatus(`Could not parse instruction. Try: "Change AJ-036 colour to Brown"`, "error");
                 }
             } catch (err) {
                 console.error("Execution error:", err);
