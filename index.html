@@ -116,19 +116,19 @@
             </div>
 
             <div class="mt-4 pt-3 border-t border-slate-700">
-                <p class="text-xs uppercase font-extrabold text-slate-400 mb-2 tracking-wider">Quick Suggestions (Tap to try):</p>
+                <p class="text-xs uppercase font-extrabold text-slate-400 mb-2 tracking-wider">Quick Suggestions (Tap to edit/try):</p>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="quickCommand('Change Supply No to 00976')" class="bg-slate-700 hover:bg-slate-600 text-amber-200 font-semibold px-3 py-1.5 rounded-lg border border-slate-500 text-sm">
+                    <button onclick="fillCommand('Change Supply No to 00976')" class="bg-slate-700 hover:bg-slate-600 text-amber-200 font-semibold px-3 py-1.5 rounded-lg border border-slate-500 text-sm">
                         + "Change Supply No to 00976"
                     </button>
-                    <button onclick="quickCommand('Price AJ-053 to 4200')" class="bg-slate-700 hover:bg-slate-600 text-amber-200 font-semibold px-3 py-1.5 rounded-lg border border-slate-500 text-sm">
+                    <button onclick="fillCommand('Price AJ-053 to 4200')" class="bg-slate-700 hover:bg-slate-600 text-amber-200 font-semibold px-3 py-1.5 rounded-lg border border-slate-500 text-sm">
                         + "Price AJ-053 to 4200"
                     </button>
-                    <button onclick="quickCommand('Change item AJ-036 size 41 to 5')" class="bg-slate-700 hover:bg-slate-600 text-amber-200 font-semibold px-3 py-1.5 rounded-lg border border-slate-500 text-sm">
+                    <button onclick="fillCommand('Change item AJ-036 size 41 to 5')" class="bg-slate-700 hover:bg-slate-600 text-amber-200 font-semibold px-3 py-1.5 rounded-lg border border-slate-500 text-sm">
                         + "Change AJ-036 size 41 to 5"
                     </button>
-                    <button onclick="quickCommand('Update branch to Colombo')" class="bg-slate-700 hover:bg-slate-600 text-amber-200 font-semibold px-3 py-1.5 rounded-lg border border-slate-500 text-sm">
-                        + "Branch to Colombo"
+                    <button onclick="fillCommand('Update branch to Colombo Store')" class="bg-slate-700 hover:bg-slate-600 text-amber-200 font-semibold px-3 py-1.5 rounded-lg border border-slate-500 text-sm">
+                        + "Branch to Colombo Store"
                     </button>
                 </div>
             </div>
@@ -311,9 +311,11 @@
             showStatus("Supply sheet reset to original values", "info");
         }
 
-        function quickCommand(text) {
+        // Fills the command input bar for review/editing instead of executing instantly
+        function fillCommand(text) {
             document.getElementById('commandInput').value = text;
-            processInstruction();
+            document.getElementById('commandInput').focus();
+            showStatus("Suggestion loaded. Edit if needed and press Apply.", "info");
         }
 
         function clearInput() {
@@ -389,31 +391,23 @@ Instructions Rules:
             }
         }
 
-        // Robust offline fallback parser supporting supply no, prices, branch, and size quantities
         function fallbackProcess(cmd) {
             const lower = cmd.toLowerCase();
             let modified = false;
 
-            // 1. Check for Supply No change (e.g. "Change Supply No to 00976" or "Supply No 00976")
             if (lower.includes("supply no") || lower.includes("supply number")) {
                 const match = cmd.match(/(?:supply\s*(?:no|number)\s*(?:to)?\s*)([a-zA-Z0-9-]+)/i);
                 if (match) {
                     currentData.supplyNo = match[1].trim();
                     modified = true;
                 }
-            }
-
-            // 2. Check for Branch change
-            else if (lower.includes("branch")) {
+            } else if (lower.includes("branch")) {
                 const match = cmd.match(/branch\s+(?:to\s+)?([a-zA-Z0-9\s]+)/i);
                 if (match) {
                     currentData.branch = match[1].trim();
                     modified = true;
                 }
-            }
-
-            // 3. Check for Price change (e.g. "Price AJ-053 to 4200")
-            else {
+            } else {
                 const itemMatch = cmd.match(/(aj-\d+)/i);
                 if (itemMatch) {
                     const artNo = itemMatch[1].toUpperCase();
@@ -428,9 +422,7 @@ Instructions Rules:
                                 modified = true;
                             }
                         }
-                    } 
-                    // 4. Check for Size Quantity change
-                    else if (item) {
+                    } else if (item) {
                         const sizeMatch = cmd.match(/size\s*(\d{2})/i);
                         const qtyMatch = cmd.match(/(?:qty|quantity|to|=|set)\s*(\d+)/i);
 
