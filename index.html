@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title> Shoe Supply Manager</title>
+    <title>Shoe Supply Manager</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for icons -->
@@ -36,7 +36,6 @@
             font-family: 'Inter', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
-        /* Extra high contrast borders & focus states for accessibility */
         .accessible-btn {
             transition: transform 0.1s active, background-color 0.2s;
             touch-action: manipulation;
@@ -44,15 +43,10 @@
         .accessible-btn:active {
             transform: scale(0.96);
         }
-        /* Mobile table scroll styling */
-        .table-scroll-shadow {
-            background: linear-gradient(90deg, rgba(0,0,0,0.15), rgba(0,0,0,0));
-        }
-        /* Print Stylesheet to export cleanly to PDF */
         @media print {
             .no-print { display: none !important; }
             body { background: white !important; color: black !important; }
-            #sheet-preview-card { border: none !important; shadow: none !important; padding: 0 !important; }
+            #sheet-preview-card { border: none !important; box-shadow: none !important; padding: 0 !important; }
             table { font-size: 11pt !important; border-collapse: collapse !important; }
             th, td { border: 1px solid #000 !important; padding: 4px !important; color: black !important; }
         }
@@ -60,7 +54,7 @@
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col pb-12">
 
-    <!-- Top Header: Senior Accessible Design -->
+    <!-- Top Header -->
     <header class="bg-brand-blue border-b-4 border-brand-yellow p-4 sticky top-0 z-50 shadow-lg">
         <div class="max-w-4xl mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-3">
@@ -72,7 +66,6 @@
                     <p class="text-xs md:text-sm font-semibold text-brand-amber">Easy Voice & Text Order Modifier</p>
                 </div>
             </div>
-            <!-- Quick Reset / Print -->
             <div class="flex space-x-2 no-print">
                 <button onclick="resetData()" class="accessible-btn bg-slate-700 hover:bg-slate-600 text-white font-bold py-2 px-3 rounded-xl border-2 border-slate-400 text-sm flex items-center gap-1">
                     <i class="fa-solid fa-rotate-left"></i> <span class="hidden sm:inline">Reset</span>
@@ -86,7 +79,7 @@
 
     <main class="max-w-4xl w-full mx-auto p-4 flex-1 flex flex-col gap-6">
 
-        <!-- VOICE & COMMAND ASSISTANT PANEL (Senior Friendly) -->
+        <!-- VOICE & COMMAND ASSISTANT PANEL -->
         <section class="bg-slate-800 border-4 border-slate-600 rounded-2xl p-5 shadow-xl no-print">
             <div class="flex items-center justify-between mb-3">
                 <label class="text-lg md:text-xl font-black text-amber-300 flex items-center gap-2">
@@ -96,7 +89,6 @@
                 <span class="text-xs bg-slate-700 text-slate-300 px-2.5 py-1 rounded-full font-bold">AI Powered</span>
             </div>
 
-            <!-- Voice Input Big Button & Input Box -->
             <div class="flex flex-col md:flex-row gap-3">
                 <div class="relative flex-1">
                     <input type="text" id="commandInput" 
@@ -109,14 +101,12 @@
                 </div>
                 
                 <div class="flex gap-2">
-                    <!-- Mic Button -->
                     <button id="micBtn" onclick="toggleVoice()" 
                         class="accessible-btn flex-1 md:flex-initial bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-6 py-4 rounded-xl border-3 border-amber-200 text-lg flex items-center justify-center gap-2 shadow-md">
                         <i id="micIcon" class="fa-solid fa-microphone text-xl"></i>
                         <span id="micText">Speak</span>
                     </button>
 
-                    <!-- Execute Button -->
                     <button onclick="processInstruction()" 
                         class="accessible-btn flex-1 md:flex-initial bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-8 py-4 rounded-xl border-3 border-emerald-200 text-lg flex items-center justify-center gap-2 shadow-md">
                         <i class="fa-solid fa-paper-plane text-xl"></i>
@@ -125,7 +115,6 @@
                 </div>
             </div>
 
-            <!-- Pre-made Quick Action Buttons (Senior Shortcuts) -->
             <div class="mt-4 pt-3 border-t border-slate-700">
                 <p class="text-xs uppercase font-extrabold text-slate-400 mb-2 tracking-wider">Quick Suggestions (Tap to try):</p>
                 <div class="flex flex-wrap gap-2">
@@ -144,17 +133,15 @@
                 </div>
             </div>
 
-            <!-- Status Indicator -->
             <div id="statusBox" class="hidden mt-3 p-3 rounded-lg text-base font-bold flex items-center gap-2">
                 <i id="statusIcon" class="fa-solid"></i>
                 <span id="statusMessage">Ready</span>
             </div>
         </section>
 
-        <!-- LIVE SUPPLY SHEET PREVIEW (Matches AJ Leather Shoes Template) -->
+        <!-- LIVE SUPPLY SHEET PREVIEW -->
         <section id="sheet-preview-card" class="bg-white text-slate-900 border-4 border-slate-400 rounded-2xl p-4 md:p-6 shadow-2xl relative overflow-hidden">
             
-            <!-- Header section of PDF -->
             <div class="border-b-2 border-slate-800 pb-4 mb-4">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                     <div>
@@ -177,19 +164,20 @@
                         <span id="lblBranch" class="text-blue-800 text-lg font-black bg-yellow-200 px-2 py-0.5 rounded border border-yellow-400">Head Office</span>
                     </div>
                     <div class="sm:col-span-2">
-                        <span class="text-slate-500 uppercase text-xs block">Item Category</span>
-                        <span id="lblItemCat" class="text-slate-900 font-bold">Gents office shoes</span>
+                        <span class="text-slate-500 uppercase text-xs block">Item</span>
+                        <span id="lblItem" class="text-slate-900 font-bold">Gents office shoes</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Table section with horizontal scroll for small phones -->
+            <!-- Table with separate Art No and Colour columns -->
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse min-w-[640px]">
+                <table class="w-full text-left border-collapse min-w-[700px]">
                     <thead>
                         <tr class="bg-slate-800 text-white text-xs md:text-sm font-black uppercase tracking-wider">
                             <th class="p-2 border border-slate-700 text-center w-10">No</th>
-                            <th class="p-2 border border-slate-700">Art No & Colour</th>
+                            <th class="p-2 border border-slate-700">Art No</th>
+                            <th class="p-2 border border-slate-700">Colour</th>
                             <th class="p-2 border border-slate-700 text-center w-10">39</th>
                             <th class="p-2 border border-slate-700 text-center w-10">40</th>
                             <th class="p-2 border border-slate-700 text-center w-10">41</th>
@@ -199,7 +187,6 @@
                             <th class="p-2 border border-slate-700 text-center w-10">45</th>
                             <th class="p-2 border border-slate-700 text-center bg-amber-500 text-slate-950 font-black">Total Qty</th>
                             <th class="p-2 border border-slate-700 text-right">Unit Price (LKR)</th>
-                            <th class="p-2 border border-slate-700 text-right">Subtotal</th>
                             <th class="p-2 border border-slate-700 text-center no-print">Action</th>
                         </tr>
                     </thead>
@@ -208,9 +195,8 @@
                     </tbody>
                     <tfoot>
                         <tr class="bg-amber-100 font-black text-slate-900 border-t-2 border-slate-800 text-base md:text-lg">
-                            <td colspan="9" class="p-3 text-right uppercase border border-slate-400">Grand Total:</td>
+                            <td colspan="10" class="p-3 text-right uppercase border border-slate-400">Grand Total:</td>
                             <td id="grandTotalQty" class="p-3 text-center bg-amber-400 text-slate-950 font-black text-xl border border-slate-400">60</td>
-                            <td class="p-3 border border-slate-400"></td>
                             <td id="grandTotalAmount" class="p-3 text-right text-blue-900 text-xl font-black border border-slate-400">LKR 237,000</td>
                             <td class="no-print border border-slate-400"></td>
                         </tr>
@@ -227,13 +213,12 @@
     </main>
 
     <script>
-        // --- INITIAL DATA STORE (From the uploaded AJ Shoes PDF Document) ---
         const initialData = {
             supplyNo: "00974",
             supplyName: "AJITH PERERA",
             date: "11/10/26",
             branch: "Main Store",
-            itemCategory: "Gents office shoes",
+            item: "Gents office shoes",
             items: [
                 { id: 1, artNo: "AJ-036", color: "Black", sizes: { 39: 1, 40: 1, 41: 3, 42: 3, 43: 2, 44: 1, 45: 1 }, price: 3950 },
                 { id: 2, artNo: "AJ-053", color: "Black", sizes: { 39: 1, 40: 1, 41: 3, 42: 3, 43: 2, 44: 1, 45: 1 }, price: 3950 },
@@ -245,13 +230,12 @@
 
         let currentData = JSON.parse(JSON.stringify(initialData));
 
-        // --- RENDER TABLE FUNCTION ---
         function renderTable() {
             document.getElementById('lblSupplyNo').textContent = currentData.supplyNo;
             document.getElementById('lblSupplyName').textContent = currentData.supplyName;
             document.getElementById('lblDate').textContent = currentData.date;
             document.getElementById('lblBranch').textContent = currentData.branch;
-            document.getElementById('lblItemCat').textContent = currentData.itemCategory;
+            document.getElementById('lblItem').textContent = currentData.item;
 
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
@@ -260,7 +244,6 @@
             let overallAmount = 0;
 
             currentData.items.forEach((item, index) => {
-                // Calculate row total qty
                 let rowQty = 0;
                 for (let size in item.sizes) {
                     rowQty += Number(item.sizes[size] || 0);
@@ -274,9 +257,8 @@
 
                 tr.innerHTML = `
                     <td class="p-2 border border-slate-300 text-center font-bold text-slate-500">${index + 1}</td>
-                    <td class="p-2 border border-slate-300 font-black text-blue-900">
-                        ${item.artNo} <span class="text-xs font-semibold text-slate-600 block">${item.color}</span>
-                    </td>
+                    <td class="p-2 border border-slate-300 font-black text-blue-900">${item.artNo}</td>
+                    <td class="p-2 border border-slate-300 font-semibold text-slate-700">${item.color}</td>
                     <td class="p-2 border border-slate-300 text-center">${item.sizes[39] || 0}</td>
                     <td class="p-2 border border-slate-300 text-center">${item.sizes[40] || 0}</td>
                     <td class="p-2 border border-slate-300 text-center font-black ${item.sizes[41] > 0 ? 'text-blue-700 bg-blue-50' : ''}">${item.sizes[41] || 0}</td>
@@ -286,7 +268,6 @@
                     <td class="p-2 border border-slate-300 text-center">${item.sizes[45] || 0}</td>
                     <td class="p-2 border border-slate-300 text-center font-black bg-amber-200 text-slate-950">${rowQty}</td>
                     <td class="p-2 border border-slate-300 text-right text-slate-700">${item.price.toLocaleString()}</td>
-                    <td class="p-2 border border-slate-300 text-right font-bold text-emerald-800">${subtotal.toLocaleString()}</td>
                     <td class="p-2 border border-slate-300 text-center no-print">
                         <button onclick="deleteItem(${index})" class="text-red-600 hover:text-red-800 p-1" title="Delete Row">
                             <i class="fa-solid fa-trash"></i>
@@ -296,7 +277,6 @@
                 tbody.appendChild(tr);
             });
 
-            // Blank rows to match document grid aesthetic
             const fillCount = Math.max(0, 7 - currentData.items.length);
             for (let i = 0; i < fillCount; i++) {
                 const tr = document.createElement('tr');
@@ -344,7 +324,6 @@
             document.getElementById('commandInput').value = '';
         }
 
-        // --- GEMINI LLM AGENT INTEGRATION ---
         async function processInstruction() {
             const inputField = document.getElementById('commandInput');
             const prompt = inputField.value.trim();
@@ -356,7 +335,6 @@
 
             showStatus("AI Agent is processing your update...", "loading");
 
-            // System prompt instructing Gemini to act as an exact PDF order parsing agent
             const systemPrompt = `You are an AI order modification agent for an elder user managing the AJ Leather Shoes Supply Sheet.
 Your goal is to parse natural language instructions and update the current JSON data structure of the supply sheet.
 
@@ -368,10 +346,10 @@ Instructions Rules:
 2. If the user mentions modifying an item (e.g., "AJ-036"), locate it by artNo. If size is mentioned (e.g. 41), set or add that size's quantity.
 3. If user says "Branch to Kandy", update "branch" field to "Kandy".
 4. If user changes price, update "price".
-5. ALWAYS return ONLY a valid JSON object matching the EXACT original structure (supplyNo, supplyName, date, branch, itemCategory, items).
+5. ALWAYS return ONLY a valid JSON object matching the EXACT original structure (supplyNo, supplyName, date, branch, item, items).
 6. Do not include markdown code block syntax inside JSON key string values, just output the clean JSON schema structure.`;
 
-            const apiKey = ""; // Canvas runtime automatically supplies key if empty string
+            const apiKey = "";
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
 
             const payload = {
@@ -411,12 +389,10 @@ Instructions Rules:
                 }
             } catch (err) {
                 console.error("LLM Execution error:", err);
-                // Fallback deterministic local parser for simple commands
                 fallbackProcess(prompt);
             }
         }
 
-        // Rule-based fallback if offline or API limit
         function fallbackProcess(cmd) {
             const lower = cmd.toLowerCase();
             let modified = false;
@@ -429,7 +405,6 @@ Instructions Rules:
                 }
             }
 
-            // Simple pattern matching for size qty (e.g., AJ-036 size 41 to 5)
             const itemMatch = cmd.match(/(aj-\d+)/i);
             const sizeMatch = cmd.match(/size\s*(\d{2})/i);
             const qtyMatch = cmd.match(/(?:qty|quantity|to|=|set)\s*(\d+)/i);
@@ -454,7 +429,6 @@ Instructions Rules:
             }
         }
 
-        // --- SPEECH RECOGNITION (VOICE INPUT) ---
         let recognition = null;
         let isListening = false;
 
@@ -517,7 +491,6 @@ Instructions Rules:
             document.getElementById('micText').textContent = "Speak";
         }
 
-        // --- UI FEEDBACK HELPERS ---
         function showStatus(msg, type) {
             const box = document.getElementById('statusBox');
             const icon = document.getElementById('statusIcon');
@@ -543,7 +516,6 @@ Instructions Rules:
             message.textContent = msg;
         }
 
-        // Initialize table on startup
         window.onload = function() {
             renderTable();
         };
