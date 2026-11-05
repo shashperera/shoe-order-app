@@ -170,7 +170,7 @@
                 </div>
             </div>
 
-            <!-- Table with separate Art No and Colour columns -->
+            <!-- Table without Subtotal column -->
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse min-w-[700px]">
                     <thead>
@@ -185,8 +185,8 @@
                             <th class="p-2 border border-slate-700 text-center w-10">43</th>
                             <th class="p-2 border border-slate-700 text-center w-10">44</th>
                             <th class="p-2 border border-slate-700 text-center w-10">45</th>
-                            <th class="p-2 border border-slate-700 text-center bg-amber-500 text-slate-950 font-black">Total Qty</th>
-                            <th class="p-2 border border-slate-700 text-right">Unit Price (LKR)</th>
+                            <th class="p-2 border border-slate-700 text-center bg-amber-500 text-slate-950 font-black">Total QTY</th>
+                            <th class="p-2 border border-slate-700 text-right">Unit Price</th>
                             <th class="p-2 border border-slate-700 text-center no-print">Action</th>
                         </tr>
                     </thead>
@@ -195,9 +195,9 @@
                     </tbody>
                     <tfoot>
                         <tr class="bg-amber-100 font-black text-slate-900 border-t-2 border-slate-800 text-base md:text-lg">
-                            <td colspan="10" class="p-3 text-right uppercase border border-slate-400">Grand Total:</td>
+                            <td colspan="10" class="p-3 text-right uppercase border border-slate-400">Total:</td>
                             <td id="grandTotalQty" class="p-3 text-center bg-amber-400 text-slate-950 font-black text-xl border border-slate-400">60</td>
-                            <td id="grandTotalAmount" class="p-3 text-right text-blue-900 text-xl font-black border border-slate-400">LKR 237,000</td>
+                            <td class="p-3 border border-slate-400"></td>
                             <td class="no-print border border-slate-400"></td>
                         </tr>
                     </tfoot>
@@ -241,16 +241,13 @@
             tbody.innerHTML = '';
 
             let overallQty = 0;
-            let overallAmount = 0;
 
             currentData.items.forEach((item, index) => {
                 let rowQty = 0;
                 for (let size in item.sizes) {
                     rowQty += Number(item.sizes[size] || 0);
                 }
-                const subtotal = rowQty * item.price;
                 overallQty += rowQty;
-                overallAmount += subtotal;
 
                 const tr = document.createElement('tr');
                 tr.className = index % 2 === 0 ? 'bg-white hover:bg-amber-50' : 'bg-slate-50 hover:bg-amber-50';
@@ -300,7 +297,6 @@
             }
 
             document.getElementById('grandTotalQty').textContent = overallQty;
-            document.getElementById('grandTotalAmount').textContent = 'LKR ' + overallAmount.toLocaleString();
         }
 
         function deleteItem(index) {
