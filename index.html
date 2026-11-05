@@ -32,25 +32,37 @@
         }
     </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            -webkit-tap-highlight-color: transparent;
+    body {
+        font-family: 'Inter', sans-serif;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .accessible-btn {
+        transition: transform 0.1s active, background-color 0.2s;
+        touch-action: manipulation;
+    }
+    .accessible-btn:active {
+        transform: scale(0.96);
+    }
+    @media print {
+        .no-print { display: none !important; }
+        body { 
+            background: white !important; 
+            color: black !important; 
+            padding: 0 !important; 
+            margin: 0 !important;
+            zoom: 90%; /* Automatically scales down just enough for iOS Safari */
         }
-        .accessible-btn {
-            transition: transform 0.1s active, background-color 0.2s;
-            touch-action: manipulation;
+        #sheet-preview-card { 
+            border: none !important; 
+            box-shadow: none !important; 
+            padding: 0 !important; 
+            width: 100% !important; 
+            max-width: none !important; 
         }
-        .accessible-btn:active {
-            transform: scale(0.96);
-        }
-        @media print {
-            .no-print { display: none !important; }
-            body { background: white !important; color: black !important; padding: 0 !important; transform: scale(0.95); transform-origin: top left; }
-            #sheet-preview-card { border: none !important; box-shadow: none !important; padding: 0 !important; width: 100% !important; max-width: none !important; }
-            table { font-size: 10pt !important; border-collapse: collapse !important; width: 100% !important; }
-            th, td { border: 1px solid #000 !important; padding: 4px !important; color: black !important; }
-        }
-    </style>
+        table { font-size: 9pt !important; border-collapse: collapse !important; width: 100% !important; }
+        th, td { border: 1px solid #000 !important; padding: 3px !important; color: black !important; }
+    }
+</style>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col pb-12">
 
