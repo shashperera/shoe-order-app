@@ -32,37 +32,37 @@
         }
     </script>
     <style>
-    body {
-        font-family: 'Inter', sans-serif;
-        -webkit-tap-highlight-color: transparent;
-    }
-    .accessible-btn {
-        transition: transform 0.1s active, background-color 0.2s;
-        touch-action: manipulation;
-    }
-    .accessible-btn:active {
-        transform: scale(0.96);
-    }
-    @media print {
-        .no-print { display: none !important; }
-        body { 
-            background: white !important; 
-            color: black !important; 
-            padding: 0 !important; 
-            margin: 0 !important;
-            zoom: 90%; /* Automatically scales down just enough for iOS Safari */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
-        #sheet-preview-card { 
-            border: none !important; 
-            box-shadow: none !important; 
-            padding: 0 !important; 
-            width: 100% !important; 
-            max-width: none !important; 
+        .accessible-btn {
+            transition: transform 0.1s active, background-color 0.2s;
+            touch-action: manipulation;
         }
-        table { font-size: 9pt !important; border-collapse: collapse !important; width: 100% !important; }
-        th, td { border: 1px solid #000 !important; padding: 3px !important; color: black !important; }
-    }
-</style>
+        .accessible-btn:active {
+            transform: scale(0.96);
+        }
+        @media print {
+            .no-print { display: none !important; }
+            body { 
+                background: white !important; 
+                color: black !important; 
+                padding: 0 !important; 
+                margin: 0 !important;
+                zoom: 90%; /* Automatically scales down just enough for iOS Safari */
+            }
+            #sheet-preview-card { 
+                border: none !important; 
+                box-shadow: none !important; 
+                padding: 0 !important; 
+                width: 100% !important; 
+                max-width: none !important; 
+            }
+            table { font-size: 9pt !important; border-collapse: collapse !important; width: 100% !important; }
+            th, td { border: 1px solid #000 !important; padding: 3px !important; color: black !important; }
+        }
+    </style>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col pb-12">
 
@@ -231,10 +231,19 @@
     </main>
 
     <script>
+        // Helper function to get today's date dynamically in DD/MM/YY format
+        function getTodayDate() {
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = String(now.getFullYear()).slice(-2);
+            return `${day}/${month}/${year}`;
+        }
+
         const initialData = {
             supplyNo: "00974",
             supplyName: "AJITH PERERA",
-            date: getTodayDate(),
+            date: getTodayDate(), // Dynamic auto-date calculation
             branch: "Main Store",
             item: "Gents office shoes",
             items: [
@@ -325,6 +334,7 @@
 
         function resetData() {
             currentData = JSON.parse(JSON.stringify(initialData));
+            currentData.date = getTodayDate(); // Re-calculates today's date on reset
             renderTable();
             showStatus("Supply sheet reset to original values", "info");
         }
