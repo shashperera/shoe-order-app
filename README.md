@@ -1,4 +1,5 @@
 # AJ Leather Shoes Supply Order Manager
+<img width="800" height="1600" alt="image" src="https://github.com/user-attachments/assets/987d06e6-d5b5-43ce-a72c-0924d6234111" />
 
 A single-file mobile web application built to simplify shoe supply order management. Designed for easy use on smartphones, allowing instant inventory updates via voice commands or quick text entry.
 
