@@ -467,7 +467,8 @@
             recognition = new SpeechRecognition();
             recognition.continuous = false;
             recognition.interimResults = false;
-            recognition.lang = 'en-US';
+            // Replace 'en-US' with 'en-IN' for South Asian English accent optimization
+            recognition.lang = 'en-IN';
 
             recognition.onstart = () => {
                 isListening = true;
